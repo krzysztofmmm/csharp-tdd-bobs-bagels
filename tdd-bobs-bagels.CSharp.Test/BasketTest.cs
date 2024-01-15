@@ -1,46 +1,49 @@
 ﻿using NUnit.Framework;
+using tdd_bobs_bagels.CSharp.Main;
 
-[TestFixture]
-public class BasketTest
+namespace tdd_bobs_bagels.CSharp.Test
 {
-    private Basket basket;
-    private string bagelType;
-
-    [SetUp]
-    public void SetUp()
+    [TestFixture]
+    public class BasketTest
     {
-        int capacity = 5;
-        basket = new Basket(capacity);
-        bagelType = "Plain Bagel";
-    }
+        private Basket _basket;
+        private string _bagelType;
 
-    [Test]
-    public void TestAddBagel()
-    {
-        basket.AddBagel(bagelType);
-        Assert.AreEqual(1 , basket.Bagels.Count);
-        Assert.IsTrue(basket.Bagels.ContainsValue(bagelType));
-    }
+        [SetUp]
+        public void SetUp()
+        {
+            int capacity = 5;
+            _basket = new Basket(capacity);
+            _bagelType = "Plain Bagel";
+        }
 
-    [Test]
-    public void TestRemoveBagel()
-    {
-        basket.AddBagel(bagelType);
-        Guid id = new Guid(basket.Bagels.Keys.GetEnumerator().Current);
-        basket.RemoveBagel(id);
-        Assert.AreEqual(0 , basket.Bagels.Count);
-    }
+        [Test]
+        public void TestAddBagel()
+        {
+            _basket.AddBagel(_bagelType);
+            Assert.AreEqual(1 , _basket.Bagels.Count);
+            Assert.IsTrue(_basket.Bagels.ContainsValue(_bagelType));
+        }
 
-    [Test]
-    public void TestChangeCapacity()
-    {
-        int newCapacity = 10;
-        basket.ChangeCapacity(newCapacity);
-        Assert.AreEqual(newCapacity , basket.Capacity);
+        [Test]
+        public void TestRemoveBagel()
+        {
+            _basket.AddBagel(_bagelType);
+            var enumerator = _basket.Bagels.Keys.GetEnumerator();
+            enumerator.MoveNext();
+            Guid id = enumerator.Current;
+            _basket.RemoveBagel(id);
+            Assert.AreEqual(0 , _basket.Bagels.Count);
+        }
+
+        [Test]
+        public void TestChangeCapacity()
+        {
+            int newCapacity = 10;
+            _basket.ChangeCapacity(newCapacity);
+            Assert.AreEqual(newCapacity , _basket.Capacity);
+        }
     }
 }
-
-
-
 
 
